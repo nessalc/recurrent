@@ -53,7 +53,7 @@ ordinals = (
     r'tenth',
     )
 RE_ORDINALS = [re.compile(r + '$') for r in ordinals]
-RE_ORDINAL = re.compile(r'\d+(st|nd|rd|th)$|' + '$|'.join(ordinals))
+RE_ORDINAL = re.compile(r'\d+(st|nd|rd|th)$|' + '$|'.join(ordinals)+'$|last')
 numbers = (
     r'zero',
     r'one',
@@ -89,6 +89,8 @@ def get_ordinal_index(s):
         return int(s[:-2])
     except ValueError:
         pass
+    if s=='last':
+        return -1
     for i, reg in enumerate(RE_ORDINALS):
         if reg.match(s):
             return i + 1
